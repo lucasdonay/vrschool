@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:vrschool_mobile/app/core/ui/vrschool_ui.dart';
+import 'package:vrschool_mobile/app/core/utils/helpers/helper_functions.dart';
+
+import '../navigation/navigation_pages.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -32,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await Future.delayed(const Duration(seconds: 3));
 
-    Navigator.pushNamed(context, '/home');
+    Helpers.navigateToScreen(context, NavigationPages());
   }
 
   @override
@@ -44,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: VrSchoolUi.theme.primaryColor,
+      backgroundColor: Colors.black,
       body: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.6,
