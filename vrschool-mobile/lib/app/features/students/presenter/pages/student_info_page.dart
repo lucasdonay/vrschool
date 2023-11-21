@@ -5,7 +5,9 @@ import '../../../../core/ui/colors.dart';
 import '../../../../core/ui/vrschool_ui.dart';
 
 class AlunoIndividual extends StatefulWidget {
-  const AlunoIndividual({super.key});
+  const AlunoIndividual({Key? key, required this.alunoId});
+
+  final String alunoId;
 
   @override
   State<AlunoIndividual> createState() => _AlunoIndividualState();
@@ -93,9 +95,7 @@ class _AlunoIndividualState extends State<AlunoIndividual> {
                   const SizedBox(
                     height: 45,
                   ),
-                  Container(
-                    child: Text('OBSERVAÇÕES QUE IREI COLOCAR'),
-                  )
+                  Text('OBSERVAÇÕES QUE IREI COLOCAR')
                 ],
               ),
               Center(

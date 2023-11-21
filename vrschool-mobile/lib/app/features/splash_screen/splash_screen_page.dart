@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:video_player/video_player.dart';
-import 'package:vrschool_mobile/app/core/utils/helpers/helper_functions.dart';
-
-import '../navigation/navigation_pages.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,7 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await Future.delayed(const Duration(seconds: 3));
 
-    Helpers.navigateToScreen(context, NavigationPages());
+    // navega pra navigation e remove a rota anterior
+    Modular.to.navigate("base");
   }
 
   @override

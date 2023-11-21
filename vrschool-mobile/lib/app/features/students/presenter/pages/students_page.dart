@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vrschool_mobile/app/core/ui/colors.dart';
 
 import '../../../../core/ui/vrschool_ui.dart';
-import '../../../home/widgets/cards_aluno.dart';
+import '../../../home/widgets/cards_student.dart';
 
 class AlunosPage extends StatelessWidget {
   const AlunosPage({super.key});
@@ -57,11 +57,14 @@ class AlunosPage extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.72,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       SizedBox(
                         height: 5,
                       ),
-                      CardsAluno(),
+                      Container(
+                        height: MediaQuery.sizeOf(context).height * 0.7,
+                        child: CardsAluno(),
+                      ),
                     ],
                   ),
                 ),

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:vrschool_mobile/app/core/ui/colors.dart';
-import 'package:vrschool_mobile/app/core/ui/vrschool_ui.dart';
-import 'package:vrschool_mobile/app/features/home/stores/home_page_controller.dart';
 import 'package:vrschool_mobile/app/features/navigation/navigation_controller.dart';
 
-import '../alunos/presenter/pages/alunos_page.dart';
-import '../cursos/presenter/pages/cursos_page.dart';
+import '../students/presenter/pages/students_page.dart';
+import '../courses/presenter/pages/course_page.dart';
 import '../home/pages/home_page.dart';
 
 class NavigationPages extends StatefulWidget {
@@ -25,14 +23,12 @@ class _NavigationPagesState extends State<NavigationPages> {
     const CursosPage(),
   ];
 
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Observer(
         builder: (_) {
-          return pages[_currentIndex];
+          return pages[globalController.selectedBottomBarIndex];
         },
       ),
       bottomNavigationBar: Observer(
@@ -66,10 +62,10 @@ class _NavigationPagesState extends State<NavigationPages> {
                   label: 'Cursos',
                 ),
               ],
-              currentIndex: _currentIndex,
+              currentIndex: globalController.selectedBottomBarIndex,
               onTap: (index) {
                 setState(() {
-                  _currentIndex = index;
+                  globalController.selectedBottomBarIndex = index;
                 });
               },
               elevation: 0,

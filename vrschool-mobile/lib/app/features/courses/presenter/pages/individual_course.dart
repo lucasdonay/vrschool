@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../../../core/ui/colors.dart';
@@ -80,9 +79,7 @@ class CursoIndividual extends StatelessWidget {
                   const SizedBox(
                     height: 45,
                   ),
-                  Container(
-                    child: Text('OBSERVAÇÕES QUE IREI COLOCAR'),
-                  )
+                  Text('OBSERVAÇÕES QUE IREI COLOCAR')
                 ],
               ),
               Center(

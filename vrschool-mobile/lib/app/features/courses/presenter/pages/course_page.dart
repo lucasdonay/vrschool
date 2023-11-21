@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vrschool_mobile/app/features/home/widgets/cards_cursos.dart';
+import 'package:vrschool_mobile/app/features/home/widgets/cards_courses.dart';
 
 import '../../../../core/ui/colors.dart';
 import '../../../../core/ui/vrschool_ui.dart';
@@ -54,17 +54,17 @@ class CursosPage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.72,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      SizedBox(
-                        height: 5,
-                      ),
-                      CardsCursos(),
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      height: MediaQuery.sizeOf(context).height * 0.7,
+                      child: CardsCursos(),
+                    ),
+                  ],
                 ),
               ],
             ),

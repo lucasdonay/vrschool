@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vrschool_mobile/app/core/ui/vrschool_ui.dart';
 
-import '../widgets/cards_aluno.dart';
-import '../widgets/cards_cursos.dart';
+import '../widgets/cards_student.dart';
+import '../widgets/cards_courses.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,48 +18,39 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            physics: NeverScrollableScrollPhysics(),
             children: [
-              Center(
-                child: Image.asset(
-                  'assets/logo.png',
-                  width: 80,
-                  fit: BoxFit.cover,
+              Padding(
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text(
+                  'Alunos',
+                  style: VrSchoolUi.headline1,
                 ),
               ),
+              const SizedBox(
+                height: 5,
+              ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.72,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        'Alunos',
-                        style: VrSchoolUi.headline1,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    CardsAluno(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        'Cursos',
-                        style: VrSchoolUi.headline1,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    CardsCursos(),
-                  ],
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: CardsAluno(),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 15.0),
+                child: Text(
+                  'Cursos',
+                  style: VrSchoolUi.headline1,
                 ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: CardsCursos(),
               ),
             ],
           ),
