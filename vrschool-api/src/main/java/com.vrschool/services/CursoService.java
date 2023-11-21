@@ -1,6 +1,7 @@
 package com.vrschool.services;
 
 import com.vrschool.model.Curso;
+import com.vrschool.model.dtos.CursoDTO;
 import com.vrschool.repository.CursoAlunoRepository;
 import com.vrschool.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -20,16 +22,17 @@ public class CursoService {
     private CursoAlunoRepository cursoAlunoRepository;
 
 
-    public ResponseEntity<String> criarCurso(String descricao, String ementa) {
+    public ResponseEntity<Object> criarCurso(String descricao, String ementa) {
         Curso curso = new Curso();
         curso.setDescricao(descricao);
         curso.setEmenta(ementa);
 
-        cursoRepository.save(curso);
+        Curso cursoCriado = cursoRepository.save(curso);
 
-        return new ResponseEntity<>("Curso criado com sucesso!", HttpStatus.CREATED);
+        CursoDTO cursoDTO = new CursoDTO(cursoCriado.getCodigo(), cursoCriado.getDescricao(), cursoCriado.getEmenta());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(cursoDTO);
     }
-
     public ResponseEntity<List<Curso>> listarCursos() {
         List<Curso> cursos = cursoRepository.findAll();
         return new ResponseEntity<>(cursos, HttpStatus.OK);
@@ -40,8 +43,18 @@ public class CursoService {
 
         if (optionalCurso.isPresent()) {
             Curso curso = optionalCurso.get();
-            curso.setDescricao(novaDescricao);
-            curso.setEmenta(novaEmenta);
+            // Atualiza a descrição se novaDescricao não for null
+            if (Objects.nonNull(novaDescricao)) {
+                curso.setDescricao(novaDescricao);
+            }
+
+            // Atualiza a ementa se novaEmenta não for null
+            if (Objects.nonNull(novaEmenta)) {
+                curso.setEmenta(novaEmenta);
+            }
+
+            // Fiz essas verificações pra caso envie vazio nao ficar null no banco
+
             cursoRepository.save(curso);
             return new ResponseEntity<>("Curso atualizado com sucesso!", HttpStatus.OK);
         } else {

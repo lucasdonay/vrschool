@@ -3,6 +3,8 @@ package com.vrschool.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "curso")
 @Entity(name="curso")

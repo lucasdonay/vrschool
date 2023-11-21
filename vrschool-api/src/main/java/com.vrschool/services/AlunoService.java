@@ -1,6 +1,12 @@
 package com.vrschool.services;
 
+import com.vrschool.exceptions.CustomException;
 import com.vrschool.model.Aluno;
+import com.vrschool.model.CursoAluno;
+import com.vrschool.model.dtos.AlunoDTO;
+import com.vrschool.model.dtos.AlunoDTOWithMatricula;
+import com.vrschool.model.dtos.CursoAlunoDTO;
+import com.vrschool.model.dtos.CursoDTO;
 import com.vrschool.repository.AlunoRepository;
 import com.vrschool.repository.CursoAlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AlunoService {
@@ -20,30 +27,35 @@ public class AlunoService {
     @Autowired
     private CursoAlunoRepository cursoAlunoRepository;
 
-    public ResponseEntity<String> criarAluno(String nome) {
+
+    public Aluno criarAluno(String nome) {
         Aluno aluno = new Aluno();
         aluno.setNome(nome);
 
-        alunoRepository.save(aluno);
+        Aluno alunoCriado = alunoRepository.save(aluno);
 
-        return new ResponseEntity<>("Aluno criado com sucesso!", HttpStatus.CREATED);
+        return alunoCriado;
     }
 
-    public ResponseEntity<List<Aluno>> listarAlunos() {
-        List<Aluno> alunos = alunoRepository.findAll();
-        return new ResponseEntity<>(alunos, HttpStatus.OK);
-    }
+    public List<AlunoDTOWithMatricula> listarAlunos() {
+        List<Object[]> result = alunoRepository.listarAlunos();
 
-    public ResponseEntity<String> atualizarAluno(Long codigo, String novoNome) {
+        return result.stream()
+                .map(row -> new AlunoDTOWithMatricula(
+                        new AlunoDTO(((Number) row[0]).longValue(), (String) row[1]),
+                        (String) row[2]
+                ))
+                .collect(Collectors.toList());
+    }
+    public Aluno atualizarAluno(Long codigo, String novoNome) {
         Optional<Aluno> optionalAluno = alunoRepository.findById(codigo);
 
         if (optionalAluno.isPresent()) {
             Aluno aluno = optionalAluno.get();
             aluno.setNome(novoNome);
-            alunoRepository.save(aluno);
-            return new ResponseEntity<>("Aluno atualizado com sucesso!", HttpStatus.OK);
+            return alunoRepository.save(aluno);
         } else {
-            return new ResponseEntity<>("Aluno não encontrado", HttpStatus.NOT_FOUND);
+            throw new CustomException("Aluno não encontrado");
         }
     }
 
@@ -57,13 +69,13 @@ public class AlunoService {
             boolean alunoAssociadoACurso = cursoAlunoRepository.existsByAluno(aluno);
 
             if (alunoAssociadoACurso) {
-                return new ResponseEntity<>("Não é possível excluir o aluno. Ele está associado a um curso.", HttpStatus.BAD_REQUEST);
+                throw new CustomException("Não é possível excluir o aluno. Ele está associado a um curso.");
             } else {
                 alunoRepository.deleteById(codigo);
                 return new ResponseEntity<>("Aluno excluído com sucesso!", HttpStatus.OK);
             }
         } else {
-            return new ResponseEntity<>("Aluno não encontrado", HttpStatus.NOT_FOUND);
+            throw new CustomException("Aluno não encontrado");
         }
     }
 }

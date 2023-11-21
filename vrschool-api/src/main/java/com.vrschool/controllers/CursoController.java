@@ -25,9 +25,9 @@ public class CursoController {
 
     @PostMapping
     @ApiOperation(value = "Cria um novo curso")
-    public ResponseEntity<String> criarCurso(
-            @ApiParam(value = "Nome do curso", required = true) @RequestParam String descricao,
-            @ApiParam(value = "Ementa do curso", required = true) @RequestParam String ementa) {
+    public ResponseEntity<Object> criarCurso(
+            @RequestParam(value = "descricao", required = true) String descricao,
+            @RequestParam(value = "ementa", required = true) String ementa) {
         return cursoService.criarCurso(descricao, ementa);
     }
 

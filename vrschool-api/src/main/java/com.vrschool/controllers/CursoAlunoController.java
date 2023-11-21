@@ -1,13 +1,18 @@
 package com.vrschool.controllers;
 
-import com.vrschool.model.CursoAluno;
+import com.vrschool.exceptions.CustomException;
+import com.vrschool.model.Aluno;
+import com.vrschool.model.dtos.CursoAlunoDTO;
 import com.vrschool.services.CursoAlunoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
@@ -24,10 +29,18 @@ public class CursoAlunoController {
 
     @PostMapping
     @ApiOperation(value = "Associa um aluno a um curso")
-    public ResponseEntity<String> associarAlunoCurso(
+    public ResponseEntity<?> associarAlunoCurso(
             @ApiParam(value = "Código do aluno", required = true) @RequestParam Long codigoAluno,
             @ApiParam(value = "Código do curso", required = true) @RequestParam Long codigoCurso) {
-        return cursoAlunoService.associarAlunoCurso(codigoAluno, codigoCurso);
+
+        try {
+            CursoAlunoDTO respostaAssociacao = cursoAlunoService.associarAlunoCurso(codigoAluno, codigoCurso);
+            return ResponseEntity.status(HttpStatus.CREATED).body(respostaAssociacao);
+        } catch (CustomException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno ao processar a solicitação");
+        }
     }
 
     @DeleteMapping("/excluir-associacao")

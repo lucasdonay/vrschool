@@ -17,5 +17,9 @@ public interface CursoAlunoRepository extends JpaRepository<CursoAluno, Long> {
 
     boolean existsByAluno(Aluno aluno);
 
+    Optional<CursoAluno> findByAluno(Aluno aluno);
+
+    boolean existsByAlunoAndCurso(Aluno aluno, Curso curso);
+
     boolean existsByCurso(Curso curso);
 }
