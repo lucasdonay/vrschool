@@ -40,4 +40,13 @@ class AlunoRepository {
       return Failure(e as DioException);
     }
   }
+
+  AsyncResult<AlunoResponse, DioException> deleteById(int codigo) async {
+    try {
+      AlunoResponse alunoResponse = await alunosService.delete(codigo);
+      return Success(alunoResponse);
+    } catch (e) {
+      return Failure(e as DioException);
+    }
+  }
 }

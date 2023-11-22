@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../../../core/ui/colors.dart';
 import '../../../../core/ui/vrschool_ui.dart';
 
 class AlunoIndividual extends StatefulWidget {
-  const AlunoIndividual({Key? key, required this.alunoId});
-
-  final String alunoId;
+  const AlunoIndividual({
+    Key? key,
+  });
 
   @override
   State<AlunoIndividual> createState() => _AlunoIndividualState();
@@ -34,7 +35,7 @@ class _AlunoIndividualState extends State<AlunoIndividual> {
                     style: VrSchoolUi.headline1,
                   ),
                   const SizedBox(
-                    height: 45,
+                    height: 25,
                   ),
                   TextField(
                     controller: null,
@@ -54,80 +55,147 @@ class _AlunoIndividualState extends State<AlunoIndividual> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 15,
+                  const SizedBox(
+                    height: 20,
                   ),
                   Container(
-                    height: 50,
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          color: VrColors.black.withOpacity(0.45), width: 1),
-                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: Colors.grey), // Cor da borda
+                      borderRadius: BorderRadius.circular(8.0), // Raio da borda
                     ),
                     child: DropdownButtonHideUnderline(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: DropdownButton<String>(
-                          elevation: 4,
-                          value: selectedValue,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedValue = newValue!;
-                            });
-                          },
-                          items: <String>[
-                            'SELECIONAR',
-                            'Opção 2',
-                            'Opção 3',
-                            'Opção 4'
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7, horizontal: 5),
+                        elevation: 4,
+                        value: selectedValue,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                          });
+                        },
+                        items: <String>[
+                          'SELECIONAR',
+                          'Opção 2',
+                          'Opção 3',
+                          'Opção 4'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Text(value),
-                            );
-                          }).toList(),
-                        ),
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 45,
+                    height: 12,
                   ),
-                  Text('OBSERVAÇÕES QUE IREI COLOCAR')
+                  Text(
+                    'OBSERVAÇÕES:',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Pra excluir o aluno, ele não pode ter um curso vinculado.',
+                    style: TextStyle(fontSize: 14.0),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.red,
+                          ), // Cor de fundo
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Raio da borda
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          QuickAlert.show(
+                            context: context,
+                            type: QuickAlertType.info,
+                            confirmBtnText: 'Sim',
+                            title: 'Tem certeza que deseja deletar o curso ?',
+                            cancelBtnText: 'Não',
+                            showConfirmBtn: true,
+                            showCancelBtn: true,
+                            confirmBtnColor: VrColors.primary,
+                            cancelBtnTextStyle: TextStyle(
+                              color: VrColors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            onConfirmBtnTap: () {
+                              Navigator.pop(context);
+                              QuickAlert.show(
+                                  context: context,
+                                  type: QuickAlertType.success,
+                                  title: 'Curso deletado!',
+                                  confirmBtnText: 'OK',
+                                  confirmBtnColor: VrColors.lightContainer,
+                                  confirmBtnTextStyle: TextStyle(fontSize: 15),
+                                  onConfirmBtnTap: () {
+                                    Modular.to.navigate('/base');
+                                  });
+                            },
+                          );
+                        },
+                        child: Text(
+                          'EXCLUIR ALUNO',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.green,
+                          ), // Cor de fundo
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Raio da borda
+                            ),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          'SALVAR ALUNO',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  const SizedBox(
+                    height: 200,
+                  ),
                 ],
               ),
               Center(
                 child: Column(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.info,
-                          confirmBtnText: 'Sim',
-                          title: 'Tem certeza que deseja deletar o aluno ?',
-                          cancelBtnText: 'Não',
-                          showConfirmBtn: true,
-                          showCancelBtn: true,
-                          confirmBtnColor: VrColors.primary,
-                          cancelBtnTextStyle: TextStyle(
-                            color: VrColors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          onConfirmBtnTap: () {
-                            print('CONFIRMOU');
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                      child: Text(
-                        'EXCLUIR ALUNO',
-                        style: VrSchoolUi.headline2.copyWith(color: Colors.red),
-                      ),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -137,11 +205,8 @@ class _AlunoIndividualState extends State<AlunoIndividual> {
                       },
                       child: Text(
                         'Voltar pra pagina anterior',
-                        style: VrSchoolUi.headline2,
+                        style: VrSchoolUi.headline3,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 50,
                     ),
                   ],
                 ),

@@ -8,7 +8,6 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'VRSCHOOL',
-      color: Colors.black,
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         textTheme: VrSchoolUi.theme.textTheme,

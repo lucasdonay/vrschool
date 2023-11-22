@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/curso")
+@RequestMapping("/cursos")
 @Api(tags = "CursoController", description = "API para operações relacionadas ao Aluno")
 public class CursoController {
 

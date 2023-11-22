@@ -57,6 +57,14 @@ mixin _$AlunosStore on _AlunosStore, Store {
     return _$updateAsyncAction.run(() => super.update(updateAlunoRequest));
   }
 
+  late final _$deleteAsyncAction =
+      AsyncAction('_AlunosStore.delete', context: context);
+
+  @override
+  Future<void> delete(int index) {
+    return _$deleteAsyncAction.run(() => super.delete(index));
+  }
+
   late final _$getAllAsyncAction =
       AsyncAction('_AlunosStore.getAll', context: context);
 

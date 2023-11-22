@@ -17,6 +17,16 @@ class AlunosService {
       final addAlunoResponse = AlunoResponse.fromMap(response.data);
       return addAlunoResponse;
     } catch (e) {
+      if (e is DioException) {
+        if (e.response != null) {
+          // Acessar o corpo da resposta do backend
+          print("Erro no backend - Status Code: ${e.response?.statusCode}");
+          print("Corpo da Resposta: ${e.response?.data}");
+        } else {
+          // Caso não haja uma resposta do backend
+          print("Erro de conexão: ${e.message}");
+        }
+      }
       rethrow;
     }
   }
@@ -28,6 +38,16 @@ class AlunosService {
       final addAlunoResponse = AlunoResponse.fromMap(response.data);
       return addAlunoResponse;
     } catch (e) {
+      if (e is DioException) {
+        if (e.response != null) {
+          // Acessar o corpo da resposta do backend
+          print("Erro no backend - Status Code: ${e.response?.statusCode}");
+          print("Corpo da Resposta: ${e.response?.data}");
+        } else {
+          // Caso não haja uma resposta do backend
+          print("Erro de conexão: ${e.message}");
+        }
+      }
       rethrow;
     }
   }
@@ -37,20 +57,41 @@ class AlunosService {
       final response = await dio.get('/alunos');
       List<AlunoResponse> alunoListResponse = [];
 
-      for(int i = 0; i < response.data.length; i++) {
+      for (int i = 0; i < response.data.length; i++) {
         alunoListResponse.add(AlunoResponse.fromMap(response.data[i]));
       }
       return alunoListResponse;
     } catch (e) {
-      print("ERRROR BERNA: ${e}");
+      if (e is DioException) {
+        if (e.response != null) {
+          // Acessar o corpo da resposta do backend
+          print("Erro no backend - Status Code: ${e.response?.statusCode}");
+          print("Corpo da Resposta: ${e.response?.data}");
+        } else {
+          // Caso não haja uma resposta do backend
+          print("Erro de conexão: ${e.message}");
+        }
+      }
       rethrow;
     }
   }
 
-  Future<void> remove(String id) async {
+  Future<AlunoResponse> delete(int codigo) async {
     try {
-      final response = await dio.delete('/alunos/$id');
+      final response = await dio.delete('/alunos/$codigo');
+      final addAlunoResponse = AlunoResponse.fromMap(response.data);
+      return addAlunoResponse;
     } catch (e) {
+      if (e is DioException) {
+        if (e.response != null) {
+          // Acessar o corpo da resposta do backend
+          print("Erro no backend - Status Code: ${e.response?.statusCode}");
+          print("Corpo da Resposta: ${e.response?.data}");
+        } else {
+          // Caso não haja uma resposta do backend
+          print("Erro de conexão: ${e.message}");
+        }
+      }
       rethrow;
     }
   }

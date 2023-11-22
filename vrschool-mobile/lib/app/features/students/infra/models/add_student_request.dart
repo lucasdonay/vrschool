@@ -1,11 +1,11 @@
 class AddAlunoRequest {
-  final String name;
+  final String nome;
 
-  AddAlunoRequest({required this.name});
+  AddAlunoRequest({required this.nome});
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'nome': nome,
     };
   }
 }

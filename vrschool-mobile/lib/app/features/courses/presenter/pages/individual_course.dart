@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../../../core/ui/colors.dart';
@@ -25,7 +26,7 @@ class CursoIndividual extends StatelessWidget {
                     style: VrSchoolUi.headline1,
                   ),
                   const SizedBox(
-                    height: 45,
+                    height: 25,
                   ),
                   TextField(
                     controller: null,
@@ -46,10 +47,11 @@ class CursoIndividual extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
                   TextField(
                     controller: null,
+                    maxLines: 5,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -66,52 +68,122 @@ class CursoIndividual extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 15,
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    'OBSERVAÇÕES:',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Pra excluir o curso, não pode ter alunos cadastrados.',
+                    style: TextStyle(fontSize: 14.0),
                   ),
                   const SizedBox(
-                    height: 45,
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.red,
+                          ), // Cor de fundo
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Raio da borda
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          QuickAlert.show(
+                            context: context,
+                            type: QuickAlertType.info,
+                            confirmBtnText: 'Sim',
+                            title: 'Tem certeza que deseja deletar o curso ?',
+                            cancelBtnText: 'Não',
+                            showConfirmBtn: true,
+                            showCancelBtn: true,
+                            confirmBtnColor: VrColors.primary,
+                            cancelBtnTextStyle: TextStyle(
+                              color: VrColors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            onConfirmBtnTap: () {
+                              Navigator.pop(context);
+                              QuickAlert.show(
+                                  context: context,
+                                  type: QuickAlertType.success,
+                                  title: 'Curso deletado!',
+                                  confirmBtnText: 'OK',
+                                  confirmBtnColor: VrColors.lightContainer,
+                                  confirmBtnTextStyle: TextStyle(fontSize: 15),
+                                  onConfirmBtnTap: () {
+                                    Modular.to.navigate('/base');
+                                  });
+                            },
+                          );
+                        },
+                        child: Text(
+                          'EXCLUIR CURSO',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.green,
+                          ), // Cor de fundo
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Raio da borda
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          QuickAlert.show(
+                            context: context,
+                            type: QuickAlertType.success,
+                            title: 'Curso salvo!',
+                            confirmBtnText: 'OK',
+                            confirmBtnColor: VrColors.lightContainer,
+                            confirmBtnTextStyle: TextStyle(fontSize: 15),
+                          );
+                        },
+                        child: Text(
+                          'SALVAR CURSO',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
                   ),
                   Text(
                     'Alunos cadastrado',
                     style: VrSchoolUi.headline1,
                   ),
                   const SizedBox(
-                    height: 45,
+                    height: 200,
                   ),
-                  Text('OBSERVAÇÕES QUE IREI COLOCAR')
                 ],
               ),
               Center(
                 child: Column(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.info,
-                          confirmBtnText: 'Sim',
-                          title: 'Tem certeza que deseja deletar o aluno ?',
-                          cancelBtnText: 'Não',
-                          showConfirmBtn: true,
-                          showCancelBtn: true,
-                          confirmBtnColor: VrColors.primary,
-                          cancelBtnTextStyle: TextStyle(
-                            color: VrColors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          onConfirmBtnTap: () {
-                            print('CONFIRMOU');
-                            Navigator.pop(context);
-                          },
-                        );
-                      },
-                      child: Text(
-                        'EXCLUIR CURSO',
-                        style: VrSchoolUi.headline2.copyWith(color: Colors.red),
-                      ),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -121,11 +193,8 @@ class CursoIndividual extends StatelessWidget {
                       },
                       child: Text(
                         'Voltar pra pagina anterior',
-                        style: VrSchoolUi.headline2,
+                        style: VrSchoolUi.headline3,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 50,
                     ),
                   ],
                 ),

@@ -25,13 +25,21 @@ abstract class _AlunosStore with Store {
     alunoList.clear();
 
     for (int i = 0; i < alunos.length; i++) {
+      if (alunos[i].cursoDescricao.isEmpty) {
+        alunos[i].cursoDescricao = 'NÃO ESTÁ MATRICULADO';
+      }
+
       alunoList.add(alunos[i]);
     }
+
+    print(alunoList);
   }
 
   @action
   addNewAlunoInList(AlunoResponse alunoResponse) {
     alunoList.add(alunoResponse);
+
+    print(alunoList);
   }
 
   @action
@@ -64,6 +72,22 @@ abstract class _AlunosStore with Store {
     try {
       await repository.update(updateAlunoRequest).onSuccess((success) {
         updateAlunoInList(success);
+        print(alunoList);
+      }).onFailure((failure) {
+        throw failure;
+      });
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  @action
+  Future<void> delete(int index) async {
+    isLoading = true;
+    try {
+      await repository.deleteById(index).onSuccess((success) {
+        updateAlunoInList(success);
+        print(alunoList);
       }).onFailure((failure) {
         throw failure;
       });
