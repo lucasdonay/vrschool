@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:vrschool_mobile/app/core/ui/colors.dart';
+import 'package:vrschool_mobile/app/features/students/presenter/stores/student_store.dart';
 
 import '../../../../core/ui/vrschool_ui.dart';
 import '../../../home/widgets/cards_student.dart';
 
-class AlunosPage extends StatelessWidget {
+class AlunosPage extends StatefulWidget {
   const AlunosPage({super.key});
+
+  @override
+  State<AlunosPage> createState() => _AlunosPageState();
+}
+
+class _AlunosPageState extends State<AlunosPage> {
+  final controller = Modular.get<AlunosStore>();
+
+  @override
+  void initState() {
+    controller.getAll();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

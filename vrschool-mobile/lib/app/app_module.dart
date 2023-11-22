@@ -3,10 +3,17 @@ import 'package:vrschool_mobile/app/features/home/pages/home_page.dart';
 import 'package:vrschool_mobile/app/features/navigation/navigation_pages.dart';
 import 'package:vrschool_mobile/app/features/splash_screen/splash_screen_page.dart';
 
+import 'features/students/external/student_service.dart';
+import 'features/students/infra/repositories/student_repository.dart';
+import 'features/students/presenter/stores/student_store.dart';
+
 class AppModule extends Module {
   @override
-  void binds(Injector i) {
-    super.binds(i);
+  @override
+  void binds(i) {
+    i.add(AlunosService.new);
+    i.add(AlunoRepository.new);
+    i.addSingleton(AlunosStore.new);
   }
 
   @override
