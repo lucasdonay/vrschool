@@ -29,18 +29,13 @@ public class CursoAlunoController {
 
     @PostMapping
     @ApiOperation(value = "Associa um aluno a um curso")
-    public ResponseEntity<?> associarAlunoCurso(
+    public ResponseEntity<CursoAlunoDTO> associarAlunoCurso(
             @ApiParam(value = "Código do aluno", required = true) @RequestParam Long codigoAluno,
             @ApiParam(value = "Código do curso", required = true) @RequestParam Long codigoCurso) {
+        CursoAlunoDTO resposta = cursoAlunoService.associarAlunoCurso(codigoAluno, codigoCurso);
 
-        try {
-            CursoAlunoDTO respostaAssociacao = cursoAlunoService.associarAlunoCurso(codigoAluno, codigoCurso);
-            return ResponseEntity.status(HttpStatus.CREATED).body(respostaAssociacao);
-        } catch (CustomException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno ao processar a solicitação");
-        }
+        return new ResponseEntity<>(resposta, HttpStatus.CREATED);
+
     }
 
     @DeleteMapping("/excluir-associacao")
@@ -48,6 +43,7 @@ public class CursoAlunoController {
     public ResponseEntity<String> excluirAssociacao(
             @ApiParam(value = "Código do aluno", required = true) @RequestParam Long codigoAluno,
             @ApiParam(value = "Código do curso", required = true) @RequestParam Long codigoCurso) {
+
         return cursoAlunoService.excluirAssociacao(codigoAluno, codigoCurso);
     }
 }

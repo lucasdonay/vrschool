@@ -1,18 +1,16 @@
 package com.vrschool.model.dtos;
 
-import com.vrschool.model.Aluno;
-import com.vrschool.model.Curso;
 import lombok.Data;
 
 @Data
 public class CursoAlunoDTO {
     private Long codigo;
-    private AlunoDTO aluno;
-    private CursoDTO curso;
+    private Long codigoAluno;
+    private Long codigoCurso;
 
-    public CursoAlunoDTO(Long codigo, AlunoDTO aluno, CursoDTO curso) {
+    public CursoAlunoDTO(Long codigo, Long codigoAluno, Long codigoCurso) {
         this.codigo = codigo;
-        this.aluno = aluno;
-        this.curso = curso;
+        this.codigoAluno = codigoAluno;
+        this.codigoCurso = codigoCurso;
     }
 }

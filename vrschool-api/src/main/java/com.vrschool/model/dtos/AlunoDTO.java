@@ -8,8 +8,6 @@ public class AlunoDTO {
     private String nome;
     private String cursoDescricao;
 
-    // Construtor
-    // Construtor
     public AlunoDTO(Long codigo, String nome) {
          this.cursoDescricao = null;
     }

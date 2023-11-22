@@ -2,11 +2,7 @@ package com.vrschool.services;
 
 import com.vrschool.exceptions.CustomException;
 import com.vrschool.model.Aluno;
-import com.vrschool.model.CursoAluno;
-import com.vrschool.model.dtos.AlunoDTO;
 import com.vrschool.model.dtos.AlunoDTOWithMatricula;
-import com.vrschool.model.dtos.CursoAlunoDTO;
-import com.vrschool.model.dtos.CursoDTO;
 import com.vrschool.repository.AlunoRepository;
 import com.vrschool.repository.CursoAlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +34,13 @@ public class AlunoService {
     }
 
     public List<AlunoDTOWithMatricula> listarAlunos() {
-        List<Object[]> result = alunoRepository.listarAlunos();
+        List<Aluno> alunos = alunoRepository.findAll();
 
-        return result.stream()
-                .map(row -> new AlunoDTOWithMatricula(
-                        new AlunoDTO(((Number) row[0]).longValue(), (String) row[1]),
-                        (String) row[2]
-                ))
+        return alunos.stream()
+                .map(aluno -> {
+                    String cursoDescricao = alunoRepository.findNomeCursoByAlunoId(aluno.getCodigo());
+                    return new AlunoDTOWithMatricula(aluno.getCodigo(), aluno.getNome(), cursoDescricao);
+                })
                 .collect(Collectors.toList());
     }
     public Aluno atualizarAluno(Long codigo, String novoNome) {

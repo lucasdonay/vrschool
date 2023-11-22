@@ -1,15 +1,13 @@
 package com.vrschool.services;
 
-import com.vrschool.exceptions.CustomException;
 import com.vrschool.model.Aluno;
 import com.vrschool.model.Curso;
 import com.vrschool.model.CursoAluno;
-import com.vrschool.model.dtos.AlunoDTO;
 import com.vrschool.model.dtos.CursoAlunoDTO;
-import com.vrschool.model.dtos.CursoDTO;
 import com.vrschool.repository.AlunoRepository;
 import com.vrschool.repository.CursoAlunoRepository;
 import com.vrschool.repository.CursoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,32 +33,32 @@ public class CursoAlunoService {
         Optional<Curso> optionalCurso = cursoRepository.findById(codigoCurso);
 
         if (optionalAluno.isPresent() && optionalCurso.isPresent()) {
-            Aluno aluno = optionalAluno.get();
-            Curso curso = optionalCurso.get();
+            Optional<CursoAluno> cursoAtual = cursoAlunoRepository.findByAluno(optionalAluno.get());
 
-            // Verifique se já existe uma associação entre o aluno e o curso
-            boolean associacaoExistente = cursoAlunoRepository.existsByAlunoAndCurso(aluno, curso);
+            if (cursoAtual.isPresent()) {
+                CursoAluno cursoAlunoExistente = cursoAtual.get();
+                cursoAlunoExistente.setCurso(optionalCurso.get());
+                cursoAlunoRepository.save(cursoAlunoExistente);
 
-            if (associacaoExistente) {
-                throw new CustomException("Essa associação já existe no banco de dados");
+                return new CursoAlunoDTO(
+                        cursoAlunoExistente.getCodigo(),
+                        cursoAlunoExistente.getAluno().getCodigo(),
+                        cursoAlunoExistente.getCurso().getCodigo()
+                );
+            } else {
+                CursoAluno cursoAluno = new CursoAluno();
+                cursoAluno.setAluno(optionalAluno.get());
+                cursoAluno.setCurso(optionalCurso.get());
+                CursoAluno cursoAlunoCriado = cursoAlunoRepository.save(cursoAluno);
+
+                return new CursoAlunoDTO(
+                        cursoAlunoCriado.getCodigo(),
+                        cursoAlunoCriado.getAluno().getCodigo(),
+                        cursoAlunoCriado.getCurso().getCodigo()
+                );
             }
-
-            // Crie o objeto de associação
-            CursoAluno cursoAluno = new CursoAluno();
-            cursoAluno.setAluno(aluno);
-            cursoAluno.setCurso(curso);
-
-            // Salve o objeto de associação no banco de dados
-            CursoAluno cursoAlunoCriado = cursoAlunoRepository.save(cursoAluno);
-
-            // Crie objetos DTO para representar a resposta
-            AlunoDTO alunoDTO = new AlunoDTO(aluno.getCodigo(), aluno.getNome());
-            CursoDTO cursoDTO = new CursoDTO(curso.getCodigo(), curso.getDescricao(), curso.getEmenta());
-
-            // Retorne a resposta usando a classe DTO específica
-            return new CursoAlunoDTO(cursoAlunoCriado.getCodigo(), alunoDTO, cursoDTO);
         } else {
-            throw new CustomException("Aluno ou curso não encontrado");
+            throw new EntityNotFoundException("Aluno ou curso não encontrado");
         }
     }
 

@@ -2,14 +2,11 @@ package com.vrschool.model.dtos;
 
 import lombok.Data;
 
+import lombok.AllArgsConstructor;
 @Data
+@AllArgsConstructor
 public class AlunoDTOWithMatricula {
-    private AlunoDTO aluno;
+    private Long codigo;
+    private String nome;
     private String cursoDescricao;
-
-    // Construtor
-    public AlunoDTOWithMatricula(Long codigoAluno, String nomeAluno, String cursoDescricao) {
-        this.aluno = new AlunoDTO(codigoAluno, nomeAluno);
-        this.cursoDescricao = cursoDescricao;
-    }
 }
