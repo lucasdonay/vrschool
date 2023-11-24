@@ -30,6 +30,12 @@
 **DELETE vrschool-api/cursos-aluno/excluir-associacao** => Deleta a matricula criada passando o codigo do aluno.
 <br>
 
+
+<img src="https://github.com/lucasdonay/vrschool/raw/main/imgs/swagger.png" alt="Descrição da Imagem" height="500">
+
+Pra acessar o swagger : url_servidor_gerada/vrschool-api/swagger-ui.html#/
+
+
 ## <a name="installation">🔨 Installation</a>
 Versão java: **17**
 <br>
