@@ -1,5 +1,6 @@
 package com.vrschool.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.vrschool.model.Aluno;
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CursoAlunoRepository extends JpaRepository<CursoAluno, Long> {
 
-    Optional<CursoAluno> findByAlunoCodigoAndCursoCodigo(Long codigoAluno, Long codigoCurso);
+    List<CursoAluno> findByAlunoCodigo(Long codigoAluno);
 
-    void deleteByAlunoCodigoAndCursoCodigo(Long codigoAluno, Long codigoCurso);
-
+    void deleteByAlunoCodigo(Long codigoAluno);
     boolean existsByAluno(Aluno aluno);
 
+    boolean existsByCursoCodigo(Long codigoCurso);
     Optional<CursoAluno> findByAluno(Aluno aluno);
 
     boolean existsByCurso(Curso curso);

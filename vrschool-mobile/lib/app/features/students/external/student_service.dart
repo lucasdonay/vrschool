@@ -1,4 +1,4 @@
-import 'dart:convert';
+// ignore_for_file: unused_local_variable
 
 import 'package:dio/dio.dart';
 import 'package:vrschool_mobile/app/features/students/infra/models/student_response.dart';
@@ -13,7 +13,8 @@ class AlunosService {
   Future<AlunoResponse> add(AddAlunoRequest addAlunoRequest) async {
     try {
       final response =
-          await dio.post('/alunos', data: jsonEncode(addAlunoRequest));
+          await dio.post('/alunos', queryParameters: addAlunoRequest.toJson());
+
       final addAlunoResponse = AlunoResponse.fromMap(response.data);
       return addAlunoResponse;
     } catch (e) {
@@ -34,7 +35,7 @@ class AlunosService {
   Future<AlunoResponse> update(UpdateAlunoRequest updateAlunoRequest) async {
     try {
       final response = await dio.put('/alunos/${updateAlunoRequest.id}',
-          data: jsonEncode(updateAlunoRequest));
+          queryParameters: updateAlunoRequest.toJson());
       final addAlunoResponse = AlunoResponse.fromMap(response.data);
       return addAlunoResponse;
     } catch (e) {
@@ -56,7 +57,6 @@ class AlunosService {
     try {
       final response = await dio.get('/alunos');
       List<AlunoResponse> alunoListResponse = [];
-
       for (int i = 0; i < response.data.length; i++) {
         alunoListResponse.add(AlunoResponse.fromMap(response.data[i]));
       }
@@ -76,11 +76,10 @@ class AlunosService {
     }
   }
 
-  Future<AlunoResponse> delete(int codigo) async {
+  Future<bool> delete(int codigo) async {
     try {
       final response = await dio.delete('/alunos/$codigo');
-      final addAlunoResponse = AlunoResponse.fromMap(response.data);
-      return addAlunoResponse;
+      return true;
     } catch (e) {
       if (e is DioException) {
         if (e.response != null) {

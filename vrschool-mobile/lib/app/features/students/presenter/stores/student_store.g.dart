@@ -61,8 +61,8 @@ mixin _$AlunosStore on _AlunosStore, Store {
       AsyncAction('_AlunosStore.delete', context: context);
 
   @override
-  Future<void> delete(int index) {
-    return _$deleteAsyncAction.run(() => super.delete(index));
+  Future<void> delete(int id) {
+    return _$deleteAsyncAction.run(() => super.delete(id));
   }
 
   late final _$getAllAsyncAction =
@@ -104,6 +104,28 @@ mixin _$AlunosStore on _AlunosStore, Store {
         name: '_AlunosStore.updateAlunoInList');
     try {
       return super.updateAlunoInList(alunoResponse);
+    } finally {
+      _$_AlunosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removeAlunoInList(int id) {
+    final _$actionInfo = _$_AlunosStoreActionController.startAction(
+        name: '_AlunosStore.removeAlunoInList');
+    try {
+      return super.removeAlunoInList(id);
+    } finally {
+      _$_AlunosStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic updateCourseInAluno(int id, String curso) {
+    final _$actionInfo = _$_AlunosStoreActionController.startAction(
+        name: '_AlunosStore.updateCourseInAluno');
+    try {
+      return super.updateCourseInAluno(id, curso);
     } finally {
       _$_AlunosStoreActionController.endAction(_$actionInfo);
     }

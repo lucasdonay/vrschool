@@ -2,11 +2,13 @@ class CoursesResponse {
   final int codigo;
   String descricao;
   String ementa;
+  bool existsMatriculas;
 
   CoursesResponse({
     required this.codigo,
     required this.descricao,
     required this.ementa,
+    required this.existsMatriculas,
   });
 
   Map<String, dynamic> toMap() {
@@ -14,6 +16,7 @@ class CoursesResponse {
       'codigo': codigo,
       'descricao': descricao,
       'ementa': ementa,
+      'existsMatriculas': existsMatriculas
     };
   }
 
@@ -22,6 +25,7 @@ class CoursesResponse {
       codigo: (map['codigo'] ?? 0) as int,
       descricao: (map['descricao'] ?? '') as String,
       ementa: (map['ementa'] ?? '') as String,
+      existsMatriculas: (map['existsMatriculas'] ?? '') as bool,
     );
   }
 }

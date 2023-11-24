@@ -16,4 +16,7 @@ public class Curso {
     private String descricao;
 
     private String ementa;
+
+    @Transient
+    private boolean existsMatriculas;
 }

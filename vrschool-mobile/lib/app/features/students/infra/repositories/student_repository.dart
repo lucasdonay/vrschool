@@ -41,11 +41,12 @@ class AlunoRepository {
     }
   }
 
-  AsyncResult<AlunoResponse, DioException> deleteById(int codigo) async {
+  AsyncResult<bool, DioException> deleteById(int codigo) async {
     try {
-      AlunoResponse alunoResponse = await alunosService.delete(codigo);
+      bool alunoResponse = await alunosService.delete(codigo);
       return Success(alunoResponse);
     } catch (e) {
+      print(e);
       return Failure(e as DioException);
     }
   }

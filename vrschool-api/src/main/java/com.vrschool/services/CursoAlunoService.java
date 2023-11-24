@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,15 +64,14 @@ public class CursoAlunoService {
     }
 
     @Transactional
-    public ResponseEntity<String> excluirAssociacao(Long codigoAluno, Long codigoCurso) {
-        Optional<CursoAluno> optionalAssociacao = cursoAlunoRepository
-                .findByAlunoCodigoAndCursoCodigo(codigoAluno, codigoCurso);
+    public ResponseEntity<String> excluirAssociacao(Long codigoAluno) {
+        List<CursoAluno> associacoes = cursoAlunoRepository.findByAlunoCodigo(codigoAluno);
 
-        if (optionalAssociacao.isPresent()) {
-            cursoAlunoRepository.deleteByAlunoCodigoAndCursoCodigo(codigoAluno, codigoCurso);
-            return new ResponseEntity<>("Associação excluída com sucesso!", HttpStatus.OK);
+        if (!associacoes.isEmpty()) {
+            cursoAlunoRepository.deleteByAlunoCodigo(codigoAluno);
+            return new ResponseEntity<>("Associações excluídas com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Associação não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Nenhuma associação encontrada para o aluno", HttpStatus.NOT_FOUND);
         }
     }
 }

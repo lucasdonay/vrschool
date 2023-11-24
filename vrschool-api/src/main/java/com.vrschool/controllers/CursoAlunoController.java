@@ -41,9 +41,8 @@ public class CursoAlunoController {
     @DeleteMapping("/excluir-associacao")
     @ApiOperation(value = "Exclui a associação entre um aluno e um curso")
     public ResponseEntity<String> excluirAssociacao(
-            @ApiParam(value = "Código do aluno", required = true) @RequestParam Long codigoAluno,
-            @ApiParam(value = "Código do curso", required = true) @RequestParam Long codigoCurso) {
+            @ApiParam(value = "Código do aluno", required = true) @RequestParam Long codigoAluno) {
 
-        return cursoAlunoService.excluirAssociacao(codigoAluno, codigoCurso);
+        return cursoAlunoService.excluirAssociacao(codigoAluno);
     }
 }

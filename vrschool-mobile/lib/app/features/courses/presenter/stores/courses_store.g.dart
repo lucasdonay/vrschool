@@ -65,6 +65,14 @@ mixin _$CoursesStore on _CoursesStore, Store {
     return _$getAllAsyncAction.run(() => super.getAll());
   }
 
+  late final _$deleteAsyncAction =
+      AsyncAction('_CoursesStore.delete', context: context);
+
+  @override
+  Future<void> delete(int id) {
+    return _$deleteAsyncAction.run(() => super.delete(id));
+  }
+
   late final _$_CoursesStoreActionController =
       ActionController(name: '_CoursesStore', context: context);
 
@@ -96,6 +104,17 @@ mixin _$CoursesStore on _CoursesStore, Store {
         name: '_CoursesStore.updateCourseInList');
     try {
       return super.updateCourseInList(courseResponse);
+    } finally {
+      _$_CoursesStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removeCourseInList(int id) {
+    final _$actionInfo = _$_CoursesStoreActionController.startAction(
+        name: '_CoursesStore.removeCourseInList');
+    try {
+      return super.removeCourseInList(id);
     } finally {
       _$_CoursesStoreActionController.endAction(_$actionInfo);
     }

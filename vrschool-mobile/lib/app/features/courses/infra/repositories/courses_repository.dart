@@ -38,7 +38,15 @@ class CoursesRepository {
           await coursesServices.getAll();
       return Success(coursesListResponse);
     } catch (e) {
-      print("DEU ERRO");
+      return Failure(e as DioException);
+    }
+  }
+
+  AsyncResult<bool, DioException> deleteById(int codigo) async {
+    try {
+      bool alunoResponse = await coursesServices.delete(codigo);
+      return Success(alunoResponse);
+    } catch (e) {
       return Failure(e as DioException);
     }
   }

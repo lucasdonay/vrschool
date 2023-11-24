@@ -31,8 +31,6 @@ abstract class _AlunosStore with Store {
 
       alunoList.add(alunos[i]);
     }
-
-    print(alunoList);
   }
 
   @action
@@ -53,12 +51,33 @@ abstract class _AlunosStore with Store {
   }
 
   @action
+  removeAlunoInList(int id) {
+    for (int i = 0; i < alunoList.length; i++) {
+      if (alunoList[i].codigo == id) {
+        alunoList.remove(alunoList[i]);
+        break;
+      }
+    }
+  }
+
+  @action
+  updateCourseInAluno(int id, String curso) {
+    for (int i = 0; i < alunoList.length; i++) {
+      if (alunoList[i].codigo == id) {
+        alunoList[i].cursoDescricao = curso;
+        break;
+      }
+    }
+  }
+
+  @action
   Future<void> add(AddAlunoRequest addAlunoRequest) async {
     isLoading = true;
     try {
-      await repository.add(addAlunoRequest).onSuccess((success) {
-        addNewAlunoInList(success);
-      }).onFailure((failure) {
+      await repository
+          .add(addAlunoRequest)
+          .onSuccess(addNewAlunoInList)
+          .onFailure((failure) {
         throw failure;
       });
     } finally {
@@ -70,10 +89,10 @@ abstract class _AlunosStore with Store {
   Future<void> update(UpdateAlunoRequest updateAlunoRequest) async {
     isLoading = true;
     try {
-      await repository.update(updateAlunoRequest).onSuccess((success) {
-        updateAlunoInList(success);
-        print(alunoList);
-      }).onFailure((failure) {
+      await repository
+          .update(updateAlunoRequest)
+          .onSuccess(updateAlunoInList)
+          .onFailure((failure) {
         throw failure;
       });
     } finally {
@@ -82,12 +101,11 @@ abstract class _AlunosStore with Store {
   }
 
   @action
-  Future<void> delete(int index) async {
+  Future<void> delete(int id) async {
     isLoading = true;
     try {
-      await repository.deleteById(index).onSuccess((success) {
-        updateAlunoInList(success);
-        print(alunoList);
+      await repository.deleteById(id).onSuccess((success) {
+        removeAlunoInList(id);
       }).onFailure((failure) {
         throw failure;
       });

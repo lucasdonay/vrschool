@@ -35,6 +35,12 @@ public class CursoService {
     }
     public ResponseEntity<List<Curso>> listarCursos() {
         List<Curso> cursos = cursoRepository.findAll();
+
+        for (Curso curso : cursos) {
+            boolean existsMatriculas = cursoAlunoRepository.existsByCursoCodigo(curso.getCodigo());
+            curso.setExistsMatriculas(existsMatriculas);
+        }
+
         return new ResponseEntity<>(cursos, HttpStatus.OK);
     }
 
