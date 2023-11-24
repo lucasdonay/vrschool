@@ -1,7 +1,7 @@
 
 ## <a name="what-is-this-api">📋 Introdução ao Projeto Mobile Flutter</a>
 
-<h3>‎ ‎ ‎ Recursos Principais: </h3>
+<h3>‎Recursos Principais: </h3>
 
 **Aba Home:**
 
@@ -14,36 +14,27 @@
       <br>
 - Visualizar cards cursos:<BR>
  ⠀- Criar Curso caso não tenha nenhum card criado
-<BR>
-⠀- Editar curso
-<br>
-⠀- Deletar curso
-<br>
+<BR>⠀- Editar curso
+<br>⠀- Deletar curso
 
 **Aba Alunos:**
 
 - Acesso aos cards alunos :
-<br>
-⠀- Editar aluno<br>
+<br> ⠀- Editar aluno<br>
 ⠀- Deletar Aluno
       <br> ⠀- Matricular Aluno
    <br>
 ⠀- Criar aluno
-<br>
-⠀- Pesquisar alunos na lista
+<br>⠀- Pesquisar alunos na lista
 <br>
 
 **Aba cursos:**
 
 - Acesso aos cards cursos :
-<br>
-⠀- Criar curso
-<br>
-⠀- Editar curso
-     <br>
-⠀- Deletar curso
-<br>
-⠀- Pesquisar cursos na lista
+<br>- Criar curso
+<br>- Editar curso
+     <br>- Deletar curso
+<br>- Pesquisar cursos na lista
 <br>
 
 
