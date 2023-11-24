@@ -1,26 +1,27 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:flutter_test/flutter_test.dart';
+import 'package:vrschool_mobile/app/features/students/external/student_service.dart';
+import 'package:vrschool_mobile/app/features/students/infra/models/student_response.dart';
+import 'package:vrschool_mobile/app/features/students/infra/repositories/student_repository.dart';
+import 'package:vrschool_mobile/app/features/students/presenter/stores/student_store.dart';
 
 void main() {
-  // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-  //   // Build our app and trigger a frame.
-  //   // await tester.pumpWidget(AppModule () as Widget);
+  group('StudentController', () {
+    test('setAlunoList', () {
+      final service = AlunosService();
+      final repository = AlunoRepository(alunosService: service);
+      final controller = AlunosStore(repository);
+      final alunoList = controller.alunoList;
 
-  //   // Verify that our counter starts at 0.
-  //   expect(find.text('0'), findsOneWidget);
-  //   expect(find.text('1'), findsNothing);
+      final alunos = [
+        AlunoResponse(codigo: 1, nome: "curso A", cursoDescricao: 'Curso 1'),
+        AlunoResponse(codigo: 2, nome: "curso B", cursoDescricao: 'Curso 2'),
+      ];
 
-  //   // Tap the '+' icon and trigger a frame.
-  //   await tester.tap(find.byIcon(Icons.add));
-  //   await tester.pump();
+      controller.setAlunoList(alunos);
 
-  //   // Verify that our counter has incremented.
-  //   expect(find.text('0'), findsNothing);
-  //   expect(find.text('1'), findsOneWidget);
-  // });
+      expect(alunoList, hasLength(2));
+      expect(alunoList[0].cursoDescricao, 'Curso 1');
+      expect(alunoList[1].nome, 'curso B');
+    });
+  });
 }

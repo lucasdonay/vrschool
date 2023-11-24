@@ -10,22 +10,19 @@ class CoursesRepository {
 
   CoursesRepository({required this.coursesServices});
 
-  AsyncResult<CoursesResponse, DioException> add(
-      AddCourseRequest addCourseRequest) async {
+  AsyncResult<bool, DioException> add(AddCourseRequest addCourseRequest) async {
     try {
-      CoursesResponse courseResponse =
-          await coursesServices.add(addCourseRequest);
+      bool courseResponse = await coursesServices.add(addCourseRequest);
       return Success(courseResponse);
     } catch (e) {
       return Failure(e as DioException);
     }
   }
 
-  AsyncResult<CoursesResponse, DioException> update(
+  AsyncResult<bool, DioException> update(
       UpdateCourseRequest updateCourseRequest) async {
     try {
-      CoursesResponse coursesResponse =
-          await coursesServices.update(updateCourseRequest);
+      bool coursesResponse = await coursesServices.update(updateCourseRequest);
       return Success(coursesResponse);
     } catch (e) {
       return Failure(e as DioException);

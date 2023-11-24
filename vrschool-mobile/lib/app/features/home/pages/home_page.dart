@@ -7,7 +7,6 @@ import 'package:vrschool_mobile/app/core/ui/colors.dart';
 import 'package:vrschool_mobile/app/core/ui/vrschool_ui.dart';
 import 'package:vrschool_mobile/app/features/students/presenter/stores/student_store.dart';
 
-import '../../../core/utils/helpers/helper_functions.dart';
 import '../../courses/infra/models/courses_response.dart';
 import '../../courses/presenter/stores/courses_store.dart';
 import '../../courses/presenter/widgets/custom_tile_courses.dart';
@@ -29,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       SchedulerBinding.instance.platformDispatcher.platformBrightness ==
           Brightness.dark;
 
-  String? exist;
+  String? existOrNot;
 
   @override
   void initState() {
@@ -58,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                   height: 5,
                 ),
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.35,
+                  height: MediaQuery.sizeOf(context).height * 0.32,
                   child: _buildListAlunos(),
                 ),
                 const SizedBox(
@@ -74,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   height: 5,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.41,
                   child: _buildListCourse(),
                 ),
               ],
@@ -150,20 +149,20 @@ class _HomePageState extends State<HomePage> {
               String courseEmenta =
                   controllerCourse.coursesList[index].ementa.toUpperCase();
 
-              bool existMatricula =
-                  controllerCourse.coursesList[index].existsMatriculas;
+              bool enrollmentsExist =
+                  controllerCourse.coursesList[index].enrollmentsExist;
 
-              if (existMatricula) {
-                exist = 'Sim';
+              if (enrollmentsExist) {
+                existOrNot = 'Sim';
               } else {
-                exist = 'Não';
+                existOrNot = 'Não';
               }
 
               return CustomTileCourses(
                 id: id,
                 name: courseName,
                 subtitle: courseEmenta,
-                existMatriculas: exist.toString(),
+                enrollmentsExist: existOrNot.toString(),
                 edit: () {
                   Modular.to.pushNamed(
                     '/course/addOrEdit',
@@ -171,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                       codigo: id,
                       descricao: courseName,
                       ementa: courseEmenta,
-                      existsMatriculas: existMatricula,
+                      enrollmentsExist: enrollmentsExist,
                     ),
                   );
                 },
@@ -185,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                     title: 'Curso deletado!',
                     confirmBtnText: 'OK',
                     confirmBtnColor: VrColors.primary,
-                    confirmBtnTextStyle: TextStyle(fontSize: 15),
+                    confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                   );
                 },
               );
@@ -293,8 +292,8 @@ class _HomePageState extends State<HomePage> {
                       type: QuickAlertType.success,
                       title: 'Aluno deletado!',
                       confirmBtnText: 'OK',
-                      confirmBtnColor: VrColors.lightContainer,
-                      confirmBtnTextStyle: TextStyle(fontSize: 15),
+                      confirmBtnColor: VrColors.primary,
+                      confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                     );
                   },
                 );

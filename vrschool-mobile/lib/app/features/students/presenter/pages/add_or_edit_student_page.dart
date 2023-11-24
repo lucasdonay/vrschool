@@ -35,7 +35,7 @@ class _AddOrEditStudentPageState extends State<AddOrEditStudentPage> {
 
   var cursoCodigoMatricula = 0;
 
-  bool abriu = false;
+  bool openModal = false;
 
   TextEditingController nomeEC = TextEditingController();
   TextEditingController cursoEC = TextEditingController();
@@ -214,9 +214,10 @@ class _AddOrEditStudentPageState extends State<AddOrEditStudentPage> {
                                       type: QuickAlertType.success,
                                       title: 'Matricula desfeita!',
                                       titleColor: Colors.black,
+                                      confirmBtnColor: VrColors.primary,
                                       confirmBtnText: 'OK',
                                       confirmBtnTextStyle:
-                                          TextStyle(fontSize: 15),
+                                          TextStyle(fontSize: 15, color: Colors.white),
                                     );
                                     print('foi');
                                   },
@@ -281,8 +282,8 @@ class _AddOrEditStudentPageState extends State<AddOrEditStudentPage> {
                               type: QuickAlertType.error,
                               title: 'Nome não pode ser vazio!',
                               confirmBtnText: 'OK',
-                              confirmBtnColor: VrColors.lightContainer,
-                              confirmBtnTextStyle: TextStyle(fontSize: 15),
+                              confirmBtnColor: VrColors.primary,
+                              confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                             );
                             return;
                           }
@@ -297,8 +298,8 @@ class _AddOrEditStudentPageState extends State<AddOrEditStudentPage> {
                               type: QuickAlertType.success,
                               title: 'Aluno salvo!',
                               confirmBtnText: 'OK',
-                              confirmBtnColor: VrColors.lightContainer,
-                              confirmBtnTextStyle: TextStyle(fontSize: 15),
+                              confirmBtnColor: VrColors.primary,
+                              confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                             );
                           } else {
                             await controller
@@ -307,23 +308,32 @@ class _AddOrEditStudentPageState extends State<AddOrEditStudentPage> {
                                     name: nomeEC.text))
                                 .whenComplete(() => Modular.to.pop());
 
-                            if (abriu) {
-                              await enrollmentController.add(
+                            if (openModal) {
+                              enrollmentController.add(
                                 AddEnrollmentRequest(
                                   codigoStudent: widget.student!.codigo,
                                   idCourse: cursoCodigoMatricula,
                                 ),
                               );
-                            }
 
-                            QuickAlert.show(
-                              context: context,
-                              type: QuickAlertType.success,
-                              title: 'Aluno alterado!',
-                              confirmBtnText: 'OK',
-                              confirmBtnColor: VrColors.lightContainer,
-                              confirmBtnTextStyle: TextStyle(fontSize: 15),
-                            );
+                              QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.success,
+                                title: 'Aluno matriculado!',
+                                confirmBtnText: 'OK',
+                                confirmBtnColor: VrColors.primary,
+                                confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
+                              );
+                            } else {
+                              QuickAlert.show(
+                                context: context,
+                                type: QuickAlertType.success,
+                                title: 'Aluno alterado!',
+                                confirmBtnText: 'OK',
+                                confirmBtnColor: VrColors.primary,
+                                confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
+                              );
+                            }
                           }
                         },
                         style: ButtonStyle(
@@ -408,7 +418,7 @@ class _AddOrEditStudentPageState extends State<AddOrEditStudentPage> {
                             onTap: () {
                               cursoEC.text =
                                   courseController.coursesList[index].descricao;
-                              abriu = true;
+                              openModal = true;
                               cursoCodigoMatricula =
                                   courseController.coursesList[index].codigo;
                               Modular.to.pop();

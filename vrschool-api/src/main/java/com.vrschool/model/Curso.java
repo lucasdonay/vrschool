@@ -18,5 +18,5 @@ public class Curso {
     private String ementa;
 
     @Transient
-    private boolean existsMatriculas;
+    private boolean enrollmentsExist;
 }

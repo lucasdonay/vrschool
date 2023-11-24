@@ -124,8 +124,8 @@ class _CustomTileStudents extends State<CustomTileStudents> {
                             text:
                                 "Para desmatricular, favor editar o aluno e excluir a matricula.",
                             confirmBtnText: 'OK',
-                            confirmBtnColor: VrColors.lightContainer,
-                            confirmBtnTextStyle: TextStyle(fontSize: 15),
+                            confirmBtnColor: VrColors.primary,
+                            confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                           );
                         } else {
                           QuickAlert.show(

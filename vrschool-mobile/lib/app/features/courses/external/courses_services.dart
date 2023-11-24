@@ -8,12 +8,11 @@ import '../infra/models/add_course_request.dart';
 class CoursesServices {
   final Dio dio = Client().init();
 
-  Future<CoursesResponse> add(AddCourseRequest addAlunoRequest) async {
+  Future<bool> add(AddCourseRequest addAlunoRequest) async {
     try {
       final response =
           await dio.post('/cursos', queryParameters: addAlunoRequest.toJson());
-      final addCourseReponse = CoursesResponse.fromMap(response.data);
-      return addCourseReponse;
+      return true;
     } catch (e) {
       if (e is DioException) {
         if (e.response != null) {
@@ -29,13 +28,14 @@ class CoursesServices {
     }
   }
 
-  Future<CoursesResponse> update(UpdateCourseRequest updateCursoRequest) async {
+  Future<bool> update(UpdateCourseRequest updateCursoRequest) async {
     try {
       final response = await dio.put('/cursos/${updateCursoRequest.codigo}',
           queryParameters: updateCursoRequest.toJson());
-      final addCourseReponse = CoursesResponse.fromMap(response.data);
-      return addCourseReponse;
+
+      return true;
     } catch (e) {
+      print(e);
       if (e is DioException) {
         if (e.response != null) {
           // Acessar o corpo da resposta do backend

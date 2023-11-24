@@ -79,6 +79,7 @@ class AlunosService {
   Future<bool> delete(int codigo) async {
     try {
       final response = await dio.delete('/alunos/$codigo');
+      print("RESPONSE DELETE: $response");
       return true;
     } catch (e) {
       if (e is DioException) {

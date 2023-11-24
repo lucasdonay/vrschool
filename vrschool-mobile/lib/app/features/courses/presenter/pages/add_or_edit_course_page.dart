@@ -56,8 +56,8 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                     Text(
                       widget.course != null ? 'Editar curso' : 'Criar curso',
                       style: isDarkMode
-                            ? VrSchoolUi.headline1DarkMode
-                            : VrSchoolUi.headline1,
+                          ? VrSchoolUi.headline1DarkMode
+                          : VrSchoolUi.headline1,
                     ),
                     const SizedBox(
                       height: 25,
@@ -182,7 +182,7 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                                     ),
                                   ),
                                   onPressed: () async {
-                                    if (widget.course?.existsMatriculas ==
+                                    if (widget.course?.enrollmentsExist ==
                                         true) {
                                       await QuickAlert.show(
                                         context: context,
@@ -191,10 +191,9 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                                         text:
                                             'Favor verificar a pagina de alunos pra desmatricular alunos deste curso',
                                         confirmBtnText: 'OK',
-                                        confirmBtnColor:
-                                            VrColors.lightContainer,
-                                        confirmBtnTextStyle:
-                                            TextStyle(fontSize: 15),
+                                        confirmBtnColor: VrColors.primary,
+                                        confirmBtnTextStyle: TextStyle(
+                                            fontSize: 15, color: Colors.white),
                                       );
                                       return;
                                     } else {
@@ -218,14 +217,14 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                                               .delete(widget.course!.codigo);
 
                                           QuickAlert.show(
-                                            context: context,
-                                            type: QuickAlertType.success,
-                                            title: 'Curso deletado!',
-                                            confirmBtnText: 'OK',
-                                            confirmBtnColor: VrColors.primary,
-                                            confirmBtnTextStyle:
-                                                TextStyle(fontSize: 15),
-                                          );
+                                              context: context,
+                                              type: QuickAlertType.success,
+                                              title: 'Curso deletado!',
+                                              confirmBtnText: 'OK',
+                                              confirmBtnColor: VrColors.primary,
+                                              confirmBtnTextStyle: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.white));
 
                                           Navigator.of(context).pop();
                                         },
@@ -250,9 +249,9 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                                     type: QuickAlertType.error,
                                     title: 'Nome não pode ser vazio!',
                                     confirmBtnText: 'OK',
-                                    confirmBtnColor: VrColors.lightContainer,
+                                    confirmBtnColor: VrColors.primary,
                                     confirmBtnTextStyle:
-                                        TextStyle(fontSize: 15),
+                                        TextStyle(fontSize: 15, color: Colors.white)
                                   );
                                   return;
                                 }
@@ -263,9 +262,9 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                                     type: QuickAlertType.error,
                                     title: 'Ementa não pode ser vazio!',
                                     confirmBtnText: 'OK',
-                                    confirmBtnColor: VrColors.lightContainer,
+                                    confirmBtnColor: VrColors.primary,
                                     confirmBtnTextStyle:
-                                        TextStyle(fontSize: 15),
+                                        TextStyle(fontSize: 15, color: Colors.white)
                                   );
                                   return;
                                 }
@@ -280,27 +279,33 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                                 QuickAlert.show(
                                   context: context,
                                   type: QuickAlertType.success,
-                                  title: 'Aluno salvo!',
+                                  title: 'Curso salvo!',
                                   confirmBtnText: 'OK',
-                                  confirmBtnColor: VrColors.lightContainer,
-                                  confirmBtnTextStyle: TextStyle(fontSize: 15),
+                                  confirmBtnColor: VrColors.primary,
+                                  confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                                 );
                               } else {
-                                await controller.update(
+                                await controller
+                                    .update(
                                   UpdateCourseRequest(
-                                      codigo: widget.course!.codigo.toString(),
+                                      codigo: widget.course!.codigo,
                                       descricao: descricao.text,
-                                      ementa: ementa.text),
-                                );
-
-                                QuickAlert.show(
-                                  context: context,
-                                  type: QuickAlertType.success,
-                                  title: 'Curso alterado!',
-                                  confirmBtnText: 'OK',
-                                  confirmBtnColor: VrColors.lightContainer,
-                                  confirmBtnTextStyle: TextStyle(fontSize: 15),
-                                );
+                                      ementa: ementa.text,
+                                      enrollmentsExist:
+                                          widget.course!.enrollmentsExist),
+                                )
+                                    .then((value) {
+                                  Modular.to.pop();
+                                  QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.success,
+                                    title: 'Curso alterado!',
+                                    confirmBtnText: 'OK',
+                                    confirmBtnColor: VrColors.primary,
+                                    confirmBtnTextStyle:
+                                        TextStyle(fontSize: 15, color: Colors.white),
+                                  );
+                                });
                               }
                             },
                             style: ButtonStyle(
@@ -348,8 +353,8 @@ class _AddOrEditCoursePageState extends State<AddOrEditCoursePage> {
                         child: Text(
                           'Voltar pra pagina anterior',
                           style: isDarkMode
-                            ? VrSchoolUi.headline3DarkMode
-                            : VrSchoolUi.headline3,
+                              ? VrSchoolUi.headline3DarkMode
+                              : VrSchoolUi.headline3,
                         ),
                       ),
                     ],

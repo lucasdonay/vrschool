@@ -62,10 +62,10 @@ public class AlunoController {
 
     @DeleteMapping("/{codigo}")
     @ApiOperation(value = "Exclui um aluno")
-    public ResponseEntity<String> excluirAluno(@ApiParam(value = "Codigo do aluno a ser excluído", required = true) @PathVariable Long codigo) {
+    public ResponseEntity<?> excluirAluno(@ApiParam(value = "Codigo do aluno a ser excluído", required = true) @PathVariable Long codigo) {
         try {
-            ResponseEntity<String> respostaExclusao = alunoService.excluirAluno(codigo);
-            return respostaExclusao;
+            Aluno alunoExcluido = alunoService.excluirAluno(codigo);
+            return ResponseEntity.ok(alunoExcluido);
         } catch (CustomException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {

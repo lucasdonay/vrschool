@@ -37,8 +37,8 @@ public class CursoService {
         List<Curso> cursos = cursoRepository.findAll();
 
         for (Curso curso : cursos) {
-            boolean existsMatriculas = cursoAlunoRepository.existsByCursoCodigo(curso.getCodigo());
-            curso.setExistsMatriculas(existsMatriculas);
+            boolean enrollmentsExist = cursoAlunoRepository.existsByCursoCodigo(curso.getCodigo());
+            curso.setEnrollmentsExist(enrollmentsExist);
         }
 
         return new ResponseEntity<>(cursos, HttpStatus.OK);

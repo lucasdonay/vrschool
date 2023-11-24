@@ -12,7 +12,7 @@ class CustomTileCourses extends StatefulWidget {
   int id;
   String name;
   String subtitle;
-  String existMatriculas;
+  String enrollmentsExist;
   void Function() edit;
   void Function() delete;
   CustomTileCourses({
@@ -22,7 +22,7 @@ class CustomTileCourses extends StatefulWidget {
     required this.subtitle,
     required this.edit,
     required this.delete,
-    required this.existMatriculas,
+    required this.enrollmentsExist,
   });
 
   @override
@@ -39,7 +39,7 @@ class _CustomTileCoursesState extends State<CustomTileCourses> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
       child: Container(
-        height: 170,
+        height: 172,
         width: 100,
         decoration: BoxDecoration(
           color: isDarkMode ? VrColors.darkContainer : VrColors.white,
@@ -70,36 +70,49 @@ class _CustomTileCoursesState extends State<CustomTileCourses> {
                     children: [
                       Text(
                         'NOME DO CURSO',
-                        style: isDarkMode ? VrSchoolUi.headline2DarkMode : VrSchoolUi.headline2,
+                        style: isDarkMode
+                            ? VrSchoolUi.headline2DarkMode
+                            : VrSchoolUi.headline2,
                       ),
                       Text(
                         widget.name,
                         overflow: TextOverflow.ellipsis,
-                        style:  isDarkMode ? VrSchoolUi.headline3DarkMode : VrSchoolUi.headline3,
+                        style: isDarkMode
+                            ? VrSchoolUi.headline3DarkMode
+                            : VrSchoolUi.headline3,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
                         'POSSUI MATRICULAS',
-                        style:  isDarkMode ? VrSchoolUi.headline2DarkMode : VrSchoolUi.headline2,
+                        style: isDarkMode
+                            ? VrSchoolUi.headline2DarkMode
+                            : VrSchoolUi.headline2,
                       ),
                       Text(
-                        widget.existMatriculas,
+                        widget.enrollmentsExist,
                         overflow: TextOverflow.ellipsis,
-                        style:  isDarkMode ? VrSchoolUi.headline3DarkMode : VrSchoolUi.headline3,
+                        style: isDarkMode
+                            ? VrSchoolUi.headline3DarkMode
+                            : VrSchoolUi.headline3,
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
                         'EMENTA DO CURSO',
-                        style: isDarkMode ? VrSchoolUi.headline2DarkMode : VrSchoolUi.headline2,
+                        style: isDarkMode
+                            ? VrSchoolUi.headline2DarkMode
+                            : VrSchoolUi.headline2,
                       ),
                       Text(
                         widget.subtitle,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: isDarkMode ? VrSchoolUi.headline3DarkMode : VrSchoolUi.headline3,
+                        style: isDarkMode
+                            ? VrSchoolUi.headline3DarkMode
+                            : VrSchoolUi.headline3,
                       ),
                     ],
                   ),
@@ -121,7 +134,7 @@ class _CustomTileCoursesState extends State<CustomTileCourses> {
                     ),
                     IconButton(
                       onPressed: () {
-                        if (widget.existMatriculas != 'Sim') {
+                        if (widget.enrollmentsExist != 'Sim') {
                           QuickAlert.show(
                             context: context,
                             type: QuickAlertType.info,
@@ -149,8 +162,8 @@ class _CustomTileCoursesState extends State<CustomTileCourses> {
                             text:
                                 "Para desmatricular, favor editar o aluno e excluir a matricula.",
                             confirmBtnText: 'OK',
-                            confirmBtnColor: VrColors.lightContainer,
-                            confirmBtnTextStyle: TextStyle(fontSize: 15),
+                            confirmBtnColor: VrColors.primary,
+                            confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                           );
                         }
                       },

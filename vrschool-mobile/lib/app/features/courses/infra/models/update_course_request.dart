@@ -1,9 +1,15 @@
 class UpdateCourseRequest {
-  final String codigo;
+  final int codigo;
   final String descricao;
   final String ementa;
+  final bool? enrollmentsExist;
 
-  UpdateCourseRequest({required this.codigo, required this.descricao, required this.ementa});
+  UpdateCourseRequest({
+    required this.codigo,
+    required this.descricao,
+    required this.ementa,
+    this.enrollmentsExist,
+  });
 
   Map<String, dynamic> toJson() {
     return {

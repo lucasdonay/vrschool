@@ -29,7 +29,6 @@ abstract class _CoursesStore with Store {
     for (int i = 0; i < courses.length; i++) {
       coursesList.add(courses[i]);
     }
-
   }
 
   @action
@@ -63,11 +62,9 @@ abstract class _CoursesStore with Store {
   Future<void> add(AddCourseRequest addCourseRequest) async {
     isLoading = true;
     try {
-      await repository.add(addCourseRequest).onSuccess((success) {
-        print("PASSOU AQUI");
-        addNewCourseInList(success);
+      await repository.add(addCourseRequest).onSuccess((success) async {
+        await getAll();
       }).onFailure((failure) {
-        print("DEU ERROZAO");
         throw failure;
       });
     } finally {
@@ -80,8 +77,11 @@ abstract class _CoursesStore with Store {
     isLoading = true;
     try {
       await repository.update(updateCourseRequest).onSuccess((success) {
-        updateCourseInList(success);
-        print(coursesList);
+        updateCourseInList(CoursesResponse(
+            codigo: updateCourseRequest.codigo,
+            descricao: updateCourseRequest.descricao,
+            ementa: updateCourseRequest.ementa,
+            enrollmentsExist: updateCourseRequest.enrollmentsExist ?? false));
       }).onFailure((failure) {
         throw failure;
       });
@@ -95,10 +95,8 @@ abstract class _CoursesStore with Store {
     isLoading = true;
     try {
       await repository.getAll().onSuccess((success) {
-        print("DEU BOM");
         setCourseList(success);
       }).onFailure((failure) {
-        print("DEU RUIM");
         throw failure;
       });
     } finally {

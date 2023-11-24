@@ -37,7 +37,6 @@ abstract class _AlunosStore with Store {
   addNewAlunoInList(AlunoResponse alunoResponse) {
     alunoList.add(alunoResponse);
 
-    print(alunoList);
   }
 
   @action

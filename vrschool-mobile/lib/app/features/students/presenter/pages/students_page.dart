@@ -231,18 +231,29 @@ class _AlunosPageState extends State<AlunosPage> {
                       );
                     },
                     delete: () async {
-                      await controller
-                          .delete(id)
-                          .whenComplete(() => Modular.to.pop());
-
-                      QuickAlert.show(
-                        context: context,
-                        type: QuickAlertType.success,
-                        title: 'Aluno deletado!',
-                        confirmBtnText: 'OK',
-                        confirmBtnColor: VrColors.lightContainer,
-                        confirmBtnTextStyle: TextStyle(fontSize: 15),
-                      );
+                      try {
+                        controller.delete(id);
+                        Modular.to.pop();
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.success,
+                          title: 'Aluno deletado!',
+                          confirmBtnText: 'OK',
+                          confirmBtnColor: VrColors.primary,
+                          confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
+                        );
+                      } catch (error) {
+                        print(error);
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.error,
+                          title: 'Erro ao deletar aluno!',
+                          confirmBtnText: 'OK',
+                          confirmBtnColor: VrColors.error,
+                          confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
+                        );
+                        Modular.to.pop();
+                      }
                     },
                   );
                 }

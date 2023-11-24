@@ -55,7 +55,7 @@ public class AlunoService {
         }
     }
 
-    public ResponseEntity<String> excluirAluno(Long codigo) {
+    public Aluno excluirAluno(Long codigo) {
         Optional<Aluno> optionalAluno = alunoRepository.findById(codigo);
 
         if (optionalAluno.isPresent()) {
@@ -68,7 +68,7 @@ public class AlunoService {
                 throw new CustomException("Não é possível excluir o aluno. Ele está associado a um curso.");
             } else {
                 alunoRepository.deleteById(codigo);
-                return new ResponseEntity<>("Aluno excluído com sucesso!", HttpStatus.OK);
+                return aluno; // Retorna o objeto excluído
             }
         } else {
             throw new CustomException("Aluno não encontrado");

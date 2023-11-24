@@ -27,7 +27,7 @@ class _CursosPageState extends State<CursosPage> {
 
   String curNameSearch = "";
 
-  String? exist;
+  String? existOrnot;
 
   @override
   void initState() {
@@ -133,7 +133,7 @@ class _CursosPageState extends State<CursosPage> {
                     ),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  hintText: 'Digite o nome do aluno aqui...',
+                  hintText: 'Digite o nome do curso aqui...',
                   hintStyle: isDarkMode
                       ? VrSchoolUi.headline3DarkMode
                       : VrSchoolUi.headline3,
@@ -214,13 +214,13 @@ class _CursosPageState extends State<CursosPage> {
             String courseEmenta =
                 controller.coursesList[index].ementa.toUpperCase();
 
-            bool existMatricula =
-                controller.coursesList[index].existsMatriculas;
+            bool enrollmentsExist =
+                controller.coursesList[index].enrollmentsExist;
 
-            if (existMatricula) {
-              exist = 'Sim';
+            if (enrollmentsExist) {
+              existOrnot = 'Sim';
             } else {
-              exist = 'Não';
+              existOrnot = 'Não';
             }
 
             if (courseName
@@ -230,7 +230,7 @@ class _CursosPageState extends State<CursosPage> {
                 id: id,
                 name: courseName,
                 subtitle: courseEmenta,
-                existMatriculas: exist.toString(),
+                enrollmentsExist: existOrnot.toString(),
                 edit: () {
                   Modular.to.pushNamed(
                     '/course/addOrEdit',
@@ -238,12 +238,12 @@ class _CursosPageState extends State<CursosPage> {
                       codigo: id,
                       descricao: courseName,
                       ementa: courseEmenta,
-                      existsMatriculas: existMatricula,
+                      enrollmentsExist: enrollmentsExist,
                     ),
                   );
                 },
-                delete: () {
-                  controller.delete(id);
+                delete: () async {
+                  await controller.delete(id);
 
                   Modular.to.pop();
                   QuickAlert.show(
@@ -252,7 +252,7 @@ class _CursosPageState extends State<CursosPage> {
                     title: 'Curso deletado!',
                     confirmBtnText: 'OK',
                     confirmBtnColor: VrColors.primary,
-                    confirmBtnTextStyle: TextStyle(fontSize: 15),
+                    confirmBtnTextStyle: TextStyle(fontSize: 15, color: Colors.white),
                   );
                 },
               );
