@@ -1,7 +1,7 @@
 
 ## <a name="what-is-this-api">📋 Introdução à API da Escola</a>
 
-<h3>‎ ‎ ‎ Recursos Principais: </h3>
+<h3>‎Recursos Principais: </h3>
 
 **Alunos:**
 
